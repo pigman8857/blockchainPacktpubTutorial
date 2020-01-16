@@ -45,8 +45,8 @@ Blockchain.prototype.createNewTransaction = function (amount, sender, recipient)
 /**
  * @param blockdata will be the input data of our block from which we want to generate the hash.  
  */
-Blockchain.prototype.hashBlock = function(previousBlockHash,currentBlockData,nonce) {
-    const dataAsString = previousBlockHash + nonce.tostring()+ JSON.stringify( currentBlockData);
+Blockchain.prototype.hashBlock = function(previousBlockHash,currentBlockData, nonce) {
+    const dataAsString = previousBlockHash + nonce.toString()+ JSON.stringify( currentBlockData);
     const hash = sha256(dataAsString);
     return hash;
 }
