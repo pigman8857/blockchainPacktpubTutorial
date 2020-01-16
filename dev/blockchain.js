@@ -1,3 +1,5 @@
+const sha256 = require('sha256');  
+
 class Blockchain{
     constructor(){
         this.chain = [];
@@ -43,8 +45,10 @@ Blockchain.prototype.createNewTransaction = function (amount, sender, recipient)
 /**
  * @param blockdata will be the input data of our block from which we want to generate the hash.  
  */
-Blockchain.prototype.hashBlock = function(blockdata) {
-
+Blockchain.prototype.hashBlock = function(previousBlockHash,currentBlockData,nonce) {
+    const dataAsString = previousBlockHash + nonce.tostring()+ JSON.stringify( currentBlockData);
+    const hash = sha256(dataAsString);
+    return hash;
 }
 
 
