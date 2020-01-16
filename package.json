@@ -4,7 +4,8 @@
   "description": "",
   "main": "dev/test.js",
   "scripts": {
-    "test": "node dev/test.js"
+    "test": "node dev/test.js",
+    "start": "nodemon --watch dev -e js dev/api.js"
   },
   "author": "",
   "license": "ISC",
