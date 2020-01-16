@@ -1,5 +1,10 @@
 var express = require('express');
 var app = express();
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 
 /**
  * 
@@ -14,7 +19,8 @@ app.get('/blockchain', function (req, res) {
  * Description. The second endpoint is /transaction, which allows us to create a new transaction.
  */
 app.post('/transaction', function(req, res) {
-
+    console.log(req.body);
+    res.send(`The amount of the transaction is ${req.body.amount} bitcoin.`);
 });
 
 /**
