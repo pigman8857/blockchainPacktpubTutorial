@@ -6,6 +6,7 @@ const nodeAddress = uuid().split('-').join('');
 const Blockchain = require('./blockchain');
 const bitcoin = new Blockchain();
 const port = process.argv[2];
+const currentNodeUrl = process.argv[3];
 
 // create application/json parser
 app.use(bodyParser.json());
