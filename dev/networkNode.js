@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const uuid = require('uuid/v1');
 const nodeAddress = uuid().split('-').join('');
 const Blockchain = require('./blockchain');
+const rp = require('request-promise');
 const bitcoin = new Blockchain();
 const port = process.argv[2];
 
