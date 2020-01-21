@@ -58,6 +58,10 @@ app.post('/register-and-broadcast-node', function (req, res) {
     const newNodeUrl = req.body.newNodeUrl;
 });
 
+app.post('/register-node', function (req, res) {
+
+});
+
 app.listen(port,function(){
     console.log(`listening on port ${port}...`); 
 });

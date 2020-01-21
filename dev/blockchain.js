@@ -1,4 +1,6 @@
 const sha256 = require('sha256');  
+const port = process.argv[2];
+const currentNodeUrl = process.argv[3];
 
 class Blockchain{
     constructor(){
