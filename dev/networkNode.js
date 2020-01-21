@@ -6,7 +6,7 @@ const nodeAddress = uuid().split('-').join('');
 const Blockchain = require('./blockchain');
 const bitcoin = new Blockchain();
 const port = process.argv[2];
-const currentNodeUrl = process.argv[3];
+
 
 // create application/json parser
 app.use(bodyParser.json());
@@ -54,11 +54,29 @@ app.get('/mine', function(req, res) {
       });
 });
 
+/**
+ * The preceding endpoint will register a node and broadcast that node to the whole network. 
+ * It will do this by passing the URL of the node we want to register on the req body. 
+ * 
+ */
 app.post('/register-and-broadcast-node', function (req, res) {
     const newNodeUrl = req.body.newNodeUrl;
+    if (bitcoin.networkNodes.indexOf(newNodeUrl) == -1){
+        bitcoin.networkNodes.forEach(networkNodeUrl => {
+            //... '/register-node' 
+        
+        });
+
+        bitcoin.networkNodes.push(newNodeUrl);  
+    }
+       
 });
 
 app.post('/register-node', function (req, res) {
+
+});
+
+app.post('/register-nodes-bulk', function (req, res) {
 
 });
 
