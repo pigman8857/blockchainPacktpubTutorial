@@ -55,7 +55,7 @@ Blockchain.prototype.createNewTransaction = function (amount, sender, recipient)
 * @param transactionObj This parameter will take transaction object created from createNewTransaction.
 */
 Blockchain.prototype.addTransactionToPendingTransactions = function(transactionObj) {
-    this.pendingTransactions.push(newTransaction);
+    this.pendingTransactions.push(transactionObj);
     return this.getLastBlock()['index']+1;
 };
 
