@@ -99,7 +99,9 @@ app.post('/register-node', function (req, res) {
         bitcoin.networkNodes.indexOf(newNodeUrl) == -1;
     const notCurrentNode = bitcoin.currentNodeUrl !== newNodeUrl;
 
-    if (nodeNotAlreadyPresent && notCurrentNode)  bitcoin.networkNodes.push(newNodeUrl);
+    if (nodeNotAlreadyPresent && notCurrentNode){
+        bitcoin.networkNodes.push(newNodeUrl);
+    }
     res.json({ note:'New node registered successfully.' });
 
 });
