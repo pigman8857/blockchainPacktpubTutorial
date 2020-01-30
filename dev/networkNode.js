@@ -26,10 +26,34 @@ app.get('/blockchain', function (req, res) {
 /**
  * 
  * Description. The second endpoint is /transaction, which allows us to create a new transaction.
+ * This endpoint work after
  */
 app.post('/transaction', function(req, res) {
     const blockIndex = bitcoin.createNewTransaction(req.body.amount, req.body.sender, req.body.recipient);
     res.json({ note:`Transaction will be added in block ${blockIndex}.`});
+});
+
+/**
+ * 
+ * Description. Allows us to broadcast transaction to other nodes in our network.
+ */
+app.post('/transaction/broadcast', function(req, res)   {
+    const newTransaction = bitcoin.createNewTransaction(req.body.amount, req.body.sender, req.body.recipient);
+    bitcoin.addTransactionToPendingTransactions (newTransaction);
+    const requestPromises = []; 
+    bitcoin.networkNodes.forEach(networkNodeUrl => {
+        const requestOptions = {
+            uri: networkNodeUrl + '/transaction',
+            method: 'POST',
+            body: newTransaction,
+            json: true
+        };
+        requestPromises.push(rp(requestOptions));
+    });
+
+    Promise.all(requestPromises).then(data => {
+        res.json({ note: 'Transaction created and broadcast successfully.'})
+    });
 });
 
 /**
