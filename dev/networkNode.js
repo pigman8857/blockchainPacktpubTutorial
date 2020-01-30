@@ -29,8 +29,9 @@ app.get('/blockchain', function (req, res) {
  * This endpoint work after
  */
 app.post('/transaction', function(req, res) {
-    const blockIndex = bitcoin.createNewTransaction(req.body.amount, req.body.sender, req.body.recipient);
-    res.json({ note:`Transaction will be added in block ${blockIndex}.`});
+    const newTransaction = req.body;
+    const blockIndex = bitcoin.addTransactionToPendingTransactions(newTransaction);
+    res.json({ note: `Transaction will be added in block ${blockIndex}.`});
 });
 
 /**
