@@ -110,13 +110,17 @@ app.post('/receive-new-block', function(req, res) {
     const correctIndex = lastBlock['index'] + 1 === newBlock['index'];
     if (correctHash && correctIndex) {
         bitcoin.chain.push(newBlock);
-        bitcoin.pendingTransaction = [];
-    }
-    else{
+        bitcoin.pendingTransactions = [];
         res.json({
             note: 'New block received and accepted.',
             newBlock: newBlock
         })
+    }
+    else{
+        res.json({
+            note:'New block rejected.',
+            newBlock: newBlock
+        }); 
     }
 });
 
@@ -127,7 +131,8 @@ app.post('/receive-new-block', function(req, res) {
  */
 app.post('/register-and-broadcast-node', function (req, res) {
     const newNodeUrl = req.body.newNodeUrl;
-    if (bitcoin.networkNodes.indexOf(newNodeUrl) == -1){
+    const notTheCurrentNode = newNodeUrl !== bitcoin.currentNodeUrl;
+    if (bitcoin.networkNodes.indexOf(newNodeUrl) == -1 && notTheCurrentNode){
         const regNodesPromises = [];
         bitcoin.networkNodes.forEach(networkNodeUrl => {
             //... '/register-node' 
@@ -154,6 +159,10 @@ app.post('/register-and-broadcast-node', function (req, res) {
         });
         bitcoin.networkNodes.push(newNodeUrl);  
     }
+    else{
+        res.json({ note: 'you are trying to add exiting node.' });
+    }
+
        
 });
 
