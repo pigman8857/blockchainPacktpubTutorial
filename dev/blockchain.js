@@ -1,6 +1,7 @@
 const sha256 = require('sha256');  
 const port = process.argv[2];
 const currentNodeUrl = process.argv[3];
+const uuid = require('uuid/v1');
 
 class Blockchain{
     constructor(){
@@ -41,11 +42,22 @@ Blockchain.prototype.getLastBlock = function () {
 */
 Blockchain.prototype.createNewTransaction = function (amount, sender, recipient) {
     const newTransaction = {
-        amount,sender,recipient
+        amount,
+        sender,
+        recipient,
+        transactionId: uuid().split('-').join('')
     };
+    return newTransaction;
+}
+
+
+/** 
+* @param transactionObj This parameter will take transaction object created from createNewTransaction.
+*/
+Blockchain.prototype.addTransactionToPendingTransactions = function(transactionObj) {
     this.pendingTransactions.push(newTransaction);
     return this.getLastBlock()['index']+1;
-}
+};
 
 /**
  * @param blockdata will be the input data of our block from which we want to generate the hash.  
