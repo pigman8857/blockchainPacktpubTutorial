@@ -79,4 +79,38 @@ Blockchain.prototype.proofOfWork = function(previousBlockHash,currentBlockData) 
     return nonce;
 }
 
+Blockchain.prototype.chainIsValid = function(blockchain) {
+    let validChain = true;
+    for (var i = 1; i < blockchain.length; i++) {
+        const currentBlock = blockchain[i];
+        const prevBlock = blockchain[i - 1];
+        const blockHash = this.hashBlock (prevBlock['hash'], { transactions: currentBlock['transactions'], index: currentBlock['index'] },currentBlock['nonce']);
+        if (blockHash.substring(0, 4) !== '0000') 
+        {   
+            validChain = false; 
+            break;
+        }
+        if (currentBlock['previousBlockHash'] !== prevBlock['hash']) // chain is not valid...
+        {   
+            validChain = false; 
+            break;
+        }
+    }
+    /**
+     * we defined the genesis block, we assigned to it values such as nonce, 
+     * with a value of 100, previousBlockHash, with a value 0, and the hash of the string 0 as well.
+     * genesis block should have no transactions in it.
+     */
+    const genesisBlock = blockchain[0];
+    const correctNonce = genesisBlock['nonce'] === 100;
+    const correctPreviousBlockHash = genesisBlock['previousBlockHash'] === '0';
+    const correctHash = genesisBlock['hash'] === '0';
+    const correctTransactions = genesisBlock['transactions'].length === 0;
+    if (!correctNonce || !correctPreviousBlockHash || !correctHash || !correctTransactions) 
+    { 
+        validChain = false;
+    }
+    return validChain;
+}
+
 module.exports = Blockchain;
