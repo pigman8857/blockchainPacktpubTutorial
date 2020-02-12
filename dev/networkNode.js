@@ -243,7 +243,11 @@ app.get('/consensus', function(req, res) {
  * will simply return to us the block that the input of blockHash corresponds to.
  */
 app.get('/block/:blockHash', function(req, res) { 
-
+    const blockHash = req.params.blockHash;
+    const correctBlock = bitcoin.getBlock(blockHash);
+    res.json({
+        block: correctBlock
+    });
 });
 
 /**
