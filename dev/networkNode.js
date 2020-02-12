@@ -255,7 +255,12 @@ app.get('/block/:blockHash', function(req, res) {
  * we should expect to get the correct transaction that this ID corresponds to.
  */
 app.get('/transaction/:transactionId', function(req, res) {
-
+    const transactionId = req.params.transactionId;
+    const transactionData = bitcoin.getTransaction(transactionId);
+    res.json({
+        transaction: transactionData.transaction,
+        block: transactionData.block
+    });   
 });
 
 /**
