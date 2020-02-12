@@ -238,6 +238,33 @@ app.get('/consensus', function(req, res) {
     });
 });
 
+/**
+ * A specific blockHash will be sent with this endpoint, which, as a result, 
+ * will simply return to us the block that the input of blockHash corresponds to.
+ */
+app.get('/block/:blockHash', function(req, res) { 
+
+});
+
+/**
+ * With this endpoint, send a transactionId, and in the response, 
+ * we should expect to get the correct transaction that this ID corresponds to.
+ */
+app.get('/transaction/:transactionId', function(req, res) {
+
+});
+
+/**
+ * With this endpoint, we'll send a specific address, and in response, 
+ * you should expect to get all of the transactions that correspond to this address—every time 
+ * this specific address has either sent or received Bitcoin—in response. 
+ * you'll also get to know the current balance of this address, 
+ * which is how many Bitcoins this address currently owns.
+ */
+app.get('/address/:address', function(req, res) {
+
+});
+
 app.listen(port,function(){
     console.log(`listening on port ${port}...`); 
 });
